@@ -1,0 +1,49 @@
+{
+  "name": "rebeccas-test-reporter",
+  "version": "1.0.0",
+  "description": "A general purpose test reporting package",
+  "main": "dist/index.js",
+  "browser": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm node_modules -R",
+    "setup": "npm install",
+    "build": "tsc",
+    "rollup": "rollup -c",
+    "ci": "(npm run test-build && npm run rollup) & npm t & wait",
+    "prepublishOnly": "npm run ci && npm run rollup",
+    "preversion": "./preversion.sh",
+    "test": "jest",
+    "test-build": "npm run build && node test-build.js",
+    "version": "./version.sh",
+    "watch": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carltham/public-npms/rebeccas-test-reporter.git"
+  },
+  "homepage": "https://github.com/carltham/public-npms/rebeccas-test-reporter#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "jest": "^26.4.2",
+    "rollup": "^1.27.2",
+    "rollup-plugin-babel-minify": "^9.1.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "ts-jest": "^26.4.0",
+    "typescript": "^3.7.2"
+  },
+  "keywords": [
+    "testing",
+    "reporting",
+    "general"
+  ],
+  "author": "Carl Sundvisson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tobyhinloopen/bonaroo-able/issues"
+  }
+}
