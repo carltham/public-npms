@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A general purpose test reporting package",
   "main": "dist/index.js",
-  "browser": "dist/index.js",
+  "browser": "dist/bonaroo-able.min.js",
   "files": [
     "dist"
   ],

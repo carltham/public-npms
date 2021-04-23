@@ -19,20 +19,8 @@
             "type": "node-terminal"
         },
         {
-            "command": "npm start",
-            "name": "Run npm start",
-            "request": "launch",
-            "type": "node-terminal"
-        },
-        {
-            "command": "npm run backend",
-            "name": "Run backend",
-            "request": "launch",
-            "type": "node-terminal"
-        },
-        {
-            "command": "npm run frontend",
-            "name": "Run frontend",
+            "command": "npm run ci",
+            "name": "Run npm ci",
             "request": "launch",
             "type": "node-terminal"
         },
