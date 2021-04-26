@@ -3,22 +3,20 @@ import { DomType } from "../support/dom-type";
 import { ResultsStateBuilder } from "../base/results-state-builder";
 import { ResultType } from "../support/result-type";
 import { SpecHandler } from "../base/spec-handler";
+import { HtmlReporter } from "../base/html-reporter";
 export class FailureDom {
-  stateBuilder;
-
   constructor(
     result,
     private options: any,
     private domHandler: DomHandler,
     private specHandler: SpecHandler,
-    private $j
+    private htmlReporter: HtmlReporter,
+    private $j: any
   ) {
-    this.stateBuilder = new ResultsStateBuilder($j);
-
     var failure = domHandler.createDom(
       DomType.DIV,
       { className: "jasmine-spec-detail jasmine-failed" },
-      this.failureDescription(result, this.stateBuilder.currentParent),
+      this.failureDescription(result, htmlReporter.stateBuilder.currentParent),
       domHandler.createDom(DomType.DIV, { className: "jasmine-messages" })
     );
     var messages = failure.childNodes[1];

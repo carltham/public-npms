@@ -8,6 +8,7 @@ import { SpecHandler } from "../base/spec-handler";
 import { Functions } from "../base/functions";
 import { SummaryList } from "./summary-list";
 import { Reporter } from "./reporter";
+import { HtmlReporter } from "../base/html-reporter";
 export class JasmineDone {
   constructor(
     doneResult,
@@ -17,7 +18,8 @@ export class JasmineDone {
     private stateBuilder: ResultsStateBuilder,
     private specHandler: SpecHandler,
     private summaryList: SummaryList,
-    private reporter: Reporter
+    private reporter: Reporter,
+    private htmlReporter: HtmlReporter
   ) {
     var banner = this.domHandler.find(".jasmine-banner");
     var alert = this.domHandler.find(".jasmine-alert");
@@ -33,12 +35,12 @@ export class JasmineDone {
 
     banner.appendChild(new OptionsMenu(config, options, domHandler));
 
-    if (stateBuilder.specsExecuted < Settings.totalSpecsDefined) {
+    if (stateBuilder.specsExecuted < htmlReporter.totalSpecsDefined) {
       var skippedMessage =
         "Ran " +
         stateBuilder.specsExecuted +
         " of " +
-        Settings.totalSpecsDefined +
+        htmlReporter.totalSpecsDefined +
         " specs - run all";
       var skippedLink = specHandler.addToExistingQueryString(
         ResultType.SPEC,
@@ -61,7 +63,7 @@ export class JasmineDone {
     var globalFailures = (doneResult && doneResult.failedExpectations) || [];
     var failed = stateBuilder.failureCount + globalFailures.length > 0;
 
-    if (Settings.totalSpecsDefined > 0 || failed) {
+    if (htmlReporter.totalSpecsDefined > 0 || failed) {
       statusBarMessage +=
         Functions.pluralize(ResultType.SPEC, stateBuilder.specsExecuted) +
         ", " +
@@ -154,7 +156,7 @@ export class JasmineDone {
     results.appendChild(summaryList.summary);
     domHandler.createSummaryList(stateBuilder.topResults, summaryList.summary);
 
-    if (reporter.failures.length) {
+    if (htmlReporter.failures.length) {
       alert.appendChild(
         this.domHandler.createDom(
           DomType.SPAN,
@@ -192,8 +194,8 @@ export class JasmineDone {
       reporter.setMenuModeTo("jasmine-failure-list");
 
       var failureNode = domHandler.find(".jasmine-failures");
-      for (i = 0; i < reporter.failures.length; i++) {
-        failureNode.appendChild(reporter.failures[i]);
+      for (i = 0; i < htmlReporter.failures.length; i++) {
+        failureNode.appendChild(htmlReporter.failures[i]);
       }
     }
   }

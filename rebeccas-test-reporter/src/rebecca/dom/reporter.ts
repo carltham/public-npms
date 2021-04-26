@@ -1,6 +1,5 @@
 export class Reporter {
   htmlReporterMain;
-  failures = [];
 
   setMenuModeTo(mode) {
     this.htmlReporterMain.setAttribute(

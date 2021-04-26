@@ -44,7 +44,4 @@ export class Initializer {
       this.options.getContainer().removeChild(oldReporter);
     }
   }
-  config = function () {
-    return (this.options.env && this.options.env.configuration()) || {};
-  };
 }
