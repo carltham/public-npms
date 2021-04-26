@@ -3,12 +3,6 @@ var createPattern = function (path) {
   return { pattern: path, included: true, served: true, watched: false };
 };
 
-class Settings {
-  static suppressExcluded = false;
-  static suppressAll = false;
-  static suppressFailed = false;
-}
-
 class InintReporter {
   static $inject = ["config", "baseReporterDecorator"];
   private karmaConfig: any;
@@ -64,5 +58,4 @@ var initReporter = new InintReporter();
 
 module.exports = {
   "reporter:kjhtml": ["type", initReporter],
-  Settings,
 };

@@ -30,4 +30,8 @@ export class SpecHandler {
   defaultQueryString(key, value) {
     return "?" + key + "=" + value;
   }
+
+  seedHref(seed) {
+    return this.addToExistingQueryString("seed", seed);
+  }
 }

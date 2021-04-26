@@ -38,16 +38,13 @@ export class Initializer {
 
   clearPrior() {
     // return the reporter
-    var oldReporter = this.find("");
+    var oldReporter = this.domHandler.find("");
 
     if (oldReporter) {
       this.options.getContainer().removeChild(oldReporter);
     }
   }
-
-  find(selector) {
-    return this.options
-      .getContainer()
-      .querySelector(".jasmine_html-reporter " + selector);
-  }
+  config = function () {
+    return (this.options.env && this.options.env.configuration()) || {};
+  };
 }

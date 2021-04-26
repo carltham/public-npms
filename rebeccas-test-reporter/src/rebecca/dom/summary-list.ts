@@ -2,7 +2,10 @@ import { DomHandler } from "./dom-handler";
 import { ResultType } from "../support/result-type";
 import { DomType } from "../support/dom-type";
 import { SpecHandler } from "../base/spec-handler";
+import { Functions } from "../base/functions";
 export class SummaryList {
+  summary;
+
   constructor(
     resultsTree,
     domParent,
@@ -10,6 +13,9 @@ export class SummaryList {
     private domHandler: DomHandler,
     private specHandler: SpecHandler
   ) {
+    this.summary = domHandler.createDom(DomType.DIV, {
+      className: "jasmine-summary",
+    });
     var specListNode;
     for (var i = 0; i < resultsTree.children.length; i++) {
       var resultNode = resultsTree.children[i];
@@ -34,7 +40,13 @@ export class SummaryList {
           )
         );
 
-        new SummaryList(resultNode, suiteListNode);
+        new SummaryList(
+          resultNode,
+          suiteListNode,
+          options,
+          domHandler,
+          specHandler
+        );
         domParent.appendChild(suiteListNode);
       }
       if (resultNode.type === ResultType.SPEC) {
@@ -45,7 +57,7 @@ export class SummaryList {
           domParent.appendChild(specListNode);
         }
         var specDescription = resultNode.result.description;
-        if (noExpectations(resultNode.result)) {
+        if (Functions.noExpectations(resultNode.result)) {
           specDescription = "SPEC HAS NO EXPECTATIONS " + specDescription;
         }
         if (
@@ -66,7 +78,7 @@ export class SummaryList {
             },
             this.domHandler.createDom(
               DomType.A,
-              { href: specHref(resultNode.result) },
+              { href: specHandler.specHref(resultNode.result) },
               specDescription
             )
           )

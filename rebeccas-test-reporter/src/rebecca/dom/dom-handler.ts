@@ -1,7 +1,24 @@
 import { DomType } from "../support/dom-type";
 import { Attributes } from "../support/attributes";
+import { SummaryList } from "./summary-list";
+import { SpecHandler } from "../base/spec-handler";
 export class DomHandler {
-  constructor(private options: any) {}
+  summaryList;
+  deprecationWarnings = [];
+  constructor(
+    private options: any,
+    private specHandler: SpecHandler,
+    private j$: any
+  ) {}
+  createSummaryList(topResults: any, summary: any) {
+    this.summaryList = new SummaryList(
+      topResults,
+      summary,
+      this.options,
+      this,
+      this.specHandler
+    );
+  }
   createDom(type, attrs: object, ...childrenVarArgs: any) {
     var el = this.options.createElement(type);
 
@@ -27,5 +44,21 @@ export class DomHandler {
     });
 
     return el;
+  }
+
+  find(selector) {
+    return this.options
+      .getContainer()
+      .querySelector(".jasmine_html-reporter " + selector);
+  }
+  addDeprecationWarnings(result) {
+    if (result && result.deprecationWarnings) {
+      for (var i = 0; i < result.deprecationWarnings.length; i++) {
+        var warning = result.deprecationWarnings[i].message;
+        if (!this.j$.util.arrayContains(warning)) {
+          this.deprecationWarnings.push(warning);
+        }
+      }
+    }
   }
 }
