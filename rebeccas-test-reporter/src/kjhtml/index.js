@@ -2,11 +2,6 @@ var JASMINE_CORE_PATTERN = /([\\/]karma-jasmine[\\/])/i;
 var createPattern = function (path) {
   return { pattern: path, included: true, served: true, watched: false };
 };
-class Settings {
-  static suppressExcluded = false;
-  static suppressAll = false;
-  static suppressFailed = false;
-}
 
 var initReporter = function (karmaConfig, baseReporterDecorator) {
   var jasmineCoreIndex = 0;
@@ -32,25 +27,13 @@ var initReporter = function (karmaConfig, baseReporterDecorator) {
     }
   });
 
-  files.splice(
-    ++jasmineCoreIndex,
-    0,
-    createPattern(__dirname + "/css/jasmine.css")
-  );
-  files.splice(
-    ++jasmineCoreIndex,
-    0,
-    createPattern(__dirname + "/lib/reporters/reporter.js")
-  );
-  files.splice(
-    ++jasmineCoreIndex,
-    0,
-    createPattern(__dirname + "/lib/adapter.js")
-  );
+  files.splice(++jasmineCoreIndex, 0, createPattern(__dirname + '/css/jasmine.css'));
+  files.splice(++jasmineCoreIndex, 0, createPattern(__dirname + '/lib/html.jasmine.reporter.js'));
+  files.splice(++jasmineCoreIndex, 0, createPattern(__dirname + '/lib/adapter.js'));
 };
 
-initReporter.$inject = ["config", "baseReporterDecorator"];
+initReporter.$inject = ['config', 'baseReporterDecorator'];
 
 module.exports = {
-  "reporter:kjhtml": ["type", initReporter],
+  'reporter:kjhtml': ['type', initReporter]
 };
