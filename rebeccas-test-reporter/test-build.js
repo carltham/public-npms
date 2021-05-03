@@ -1,5 +1,5 @@
 const assert = require("assert");
-const Able = require("./dist/Able");
+const Able = require("./dist/able");
 
 const definition = { foo: ["bar"] };
 const abilities = ["foo", "bam"];

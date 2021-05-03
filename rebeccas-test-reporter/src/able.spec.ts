@@ -1,4 +1,4 @@
-import { Able } from "../src/Able";
+import { Able } from "./able";
 
 describe("Able", () => {
   it("flatten() includes own name", () => {
@@ -6,7 +6,7 @@ describe("Able", () => {
   });
 
   it("flatten() includes group members", () => {
-    const flattened = Able.flatten({foo: ["bar", "baz"]}, ["foo"]);
+    const flattened = Able.flatten({ foo: ["bar", "baz"] }, ["foo"]);
     expect(flattened).toContain("bar");
     expect(flattened).toContain("baz");
   });
@@ -46,16 +46,37 @@ describe("Able", () => {
   });
 
   it("extractValues() extracts values", () => {
-    const abilities = ["other", "?foo=0", "?noEqualSign", "?blankValue=", "?foo=1", "?arr[]=a", "?arr[]=b"];
-    expect(Able.extractValues(abilities)).toEqual(
-      [{foo: "1", noEqualSign: "", blankValue: "", arr: ["a", "b"]}, ["other"]]);
+    const abilities = [
+      "other",
+      "?foo=0",
+      "?noEqualSign",
+      "?blankValue=",
+      "?foo=1",
+      "?arr[]=a",
+      "?arr[]=b",
+    ];
+    expect(Able.extractValues(abilities)).toEqual([
+      { foo: "1", noEqualSign: "", blankValue: "", arr: ["a", "b"] },
+      ["other"],
+    ]);
   });
 
   it("applyValues() applies values & removes abilities with missing values", () => {
-    const abilities = ["metabase:dashboard:4?district={districtId}", "foo:{bar}", "arr:{x}:{y}"];
-    const values = {districtId: "1", x: ["a", "b"], y: ["c", "d"]};
+    const abilities = [
+      "metabase:dashboard:4?district={districtId}",
+      "foo:{bar}",
+      "arr:{x}:{y}",
+    ];
+    const values = { districtId: "1", x: ["a", "b"], y: ["c", "d"] };
     expect(Able.applyValues(abilities, values).sort()).toEqual(
-      ["metabase:dashboard:4?district=1", "arr:a:c", "arr:a:d", "arr:b:c", "arr:b:d"].sort());
+      [
+        "metabase:dashboard:4?district=1",
+        "arr:a:c",
+        "arr:a:d",
+        "arr:b:c",
+        "arr:b:d",
+      ].sort()
+    );
   });
 
   it("canAccess() returns true if all required abilities are present", () => {
@@ -72,13 +93,21 @@ describe("Able", () => {
 
   it("resolve() combines definition & applying of values", () => {
     const definition = {
-      districtManager: ["metabase:dashboard:5?districtId={districtId}", "unknown:{unknown}"],
+      districtManager: [
+        "metabase:dashboard:5?districtId={districtId}",
+        "unknown:{unknown}",
+      ],
       southWest: ["?districtId[]=SW"],
       northWest: ["?districtId[]=NW"],
       westDistrictManager: ["districtManager", "southWest", "northWest"],
     };
     expect(Able.resolve(definition, ["westDistrictManager"])).toEqual([
-      "westDistrictManager", "districtManager", "southWest", "northWest",
-      "metabase:dashboard:5?districtId=SW", "metabase:dashboard:5?districtId=NW"]);
+      "westDistrictManager",
+      "districtManager",
+      "southWest",
+      "northWest",
+      "metabase:dashboard:5?districtId=SW",
+      "metabase:dashboard:5?districtId=NW",
+    ]);
   });
 });
