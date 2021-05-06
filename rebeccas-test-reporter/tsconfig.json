@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
+    "allowJs": true,
     "lib": ["es2016"],
+    "declaration": true,
+    "module": "commonjs",
     "sourceMap": true,
-    "declaration": true
+    "target": "es2015",
+    "esModuleInterop": true,
+    "outDir": "dist/"
   },
-  "include": [
-    "src/**/*.ts"
-, "src/lib/reporters/reporter copy.js"  ]
+  "include": ["src/**/*.ts", "src/config.js", "src/ts/adapter.js"],
+  "exclude": ["src/**/*.spec.ts"]
 }
