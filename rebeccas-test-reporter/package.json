@@ -25,9 +25,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/carltham/public-npms/rebeccas-test-reporter.git"
+    "url": "https://github.com/carltham/public-npms/tree/main/rebeccas-test-reporter"
   },
-  "homepage": "https://github.com/carltham/public-npms/rebeccas-test-reporter#readme",
+  "homepage": "https://github.com/carltham/public-npms/blob/main/rebeccas-test-reporter/README.md",
   "dependencies": {
     "@angular/core": "^11.2.12",
     "jasmine-core": ">=3.5",
