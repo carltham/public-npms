@@ -10,7 +10,7 @@ It is ment to be more configurable and moved to minimum ES6 instead of CommonJS 
 
 ### present supported config params :
 
-<p>suppressExcluded:boolean :: anywhere in root of karma.conf.js</p>
+<p>suppressExcluded:boolean :: anywhere in root of karma.conf.js
 <pre>To hide any tests that did not run ex. when using fit(...) and fdescribe(...)<code>
     
 </code></pre>
@@ -27,3 +27,4 @@ reporterconfigs: {
 &nbsp;&nbsp;},
 },
 </code></pre>
+</p>
