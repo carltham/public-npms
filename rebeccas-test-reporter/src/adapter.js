@@ -1,3 +1,5 @@
+//console.log("jasmine = ", jasmineRequire);
+//console.log("jasmine = ", jasmine);
 (function (window) {
   /**
    * Since this is being run in a browser and the results should populate to an HTML page, require the HTML-specific Jasmine code, injecting the same reference.
@@ -20,14 +22,17 @@
       return window.location;
     },
   });
+  //console.log("queryString = ", queryString);
 
   var filterSpecs = !!queryString.getParam("spec");
+  //console.log("filterSpecs = ", filterSpecs);
 
   var config = {
     failFast: queryString.getParam("failFast"),
     oneFailurePerSpec: queryString.getParam("oneFailurePerSpec"),
     hideDisabled: queryString.getParam("hideDisabled"),
   };
+  //console.log("config = ", config);
 
   var random = queryString.getParam("random");
 
@@ -64,6 +69,7 @@
     timer: new jasmine.Timer(),
     filterSpecs: filterSpecs,
   });
+  //console.log("htmlReporter = ", htmlReporter);
 
   env.addReporter(htmlReporter);
 
@@ -77,6 +83,7 @@
         return queryString.getParam("spec");
       },
     });
+    //console.log("specFilter = ", specFilter);
 
     config.specFilter = function (spec) {
       return specFilter.matches(spec.getFullName());

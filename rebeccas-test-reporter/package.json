@@ -1,6 +1,6 @@
 {
   "name": "rebeccas-test-reporter",
-  "version": "1.0.17",
+  "version": "1.0.19",
   "description": "A general purpose test reporting package",
   "main": "dist/index.js",
   "browser": "dist/bonaroo-able.min.js",
@@ -14,7 +14,7 @@
     "build": "npm run clean-dist && npm run copy-files && tsc",
     "ci": "(npm run test-build && npm run rollup) & npm t & wait",
     "clean-dist": "rimraf dist/",
-    "copy-files": "copyfiles -u 1 src/*.js src/css/*.css dist/",
+    "copy-files": "copyfiles -u 1 src/*.js src/coverage/*.js src/css/*.css dist/",
     "prepublishOnly": "npm run ci && npm run rollup",
     "preversion": "./preversion.sh",
     "rollup": "rollup -c",
@@ -29,7 +29,10 @@
   },
   "homepage": "https://github.com/carltham/public-npms/rebeccas-test-reporter#readme",
   "dependencies": {
-    "@angular/core": "^11.2.12"
+    "@angular/core": "^11.2.12",
+    "jasmine-core": ">=3.5",
+    "karma": ">=0.9",
+    "karma-jasmine": ">=1.1"
   },
   "peerDependencies": {
     "karma": ">=0.9",
@@ -41,9 +44,6 @@
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.11.1",
     "chai": "^4.2.0",
-    "jasmine-core": ">=3.5",
-    "karma": ">=0.9",
-    "karma-jasmine": ">=1.1",
     "mocha": "^6.2.0",
     "ts-node": "^8.3.0",
     "typescript": "~4.1.5",

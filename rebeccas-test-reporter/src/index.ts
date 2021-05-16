@@ -90,18 +90,9 @@ const replaceInfile = function (
   oldValue: any,
   newValue: any
 ) {
-  let promise = new Promise(function (resolve, reject) {
-    fs.readFile(filename, "utf8", function (err, data) {
-      if (err) {
-        return console.log(err);
-      }
-      var result = data.replace(oldValue, newValue);
-
-      fs.writeFile(filename, result, "utf8", function (err) {
-        if (err) return console.log(err);
-      });
-    });
-  });
+  let data = fs.readFileSync(filename, "utf8") + "";
+  var result = data.replace(oldValue, newValue);
+  fs.writeFileSync(filename, result);
 };
 
 const initReporterInit = function (config, decorator) {

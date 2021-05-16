@@ -1,27 +1,24 @@
-# EmployeeList
+# rebeccas-test-reporter
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.5.
+This project is built on the old kara-jasmine-html-reporter.
 
-## Development server
+It is ment to be more configurable and moved to minimum ES6 instead of CommonJS as it looks like it's built with.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Configuration
 
-## Code scaffolding
+present supported config params :
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+suppressExcluded:boolean :: anywhere in root of karma.conf.js
 
-## Build
+Ex. under jasmineHtmlReporter config in karma.conf.js
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+<pre><code>
+jasmineHtmlReporter: {
+&nbsp;&nbsp;suppressExcluded: true,
+},
+reporterconfigs: {
+&nbsp;&nbsp;rebeccas: {
+&nbsp;&nbsp;&nbsp;&nbsp;suppressExcluded: true,
+&nbsp;&nbsp;},
+},
+</code></pre>
