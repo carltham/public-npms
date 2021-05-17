@@ -23,6 +23,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 console.log("Config.suppressExcluded = ", Config.suppressExcluded);
 
+function togglePopup() {
+  var popup = document.getElementById("configBox");
+  popup.classList.toggle("show");
+}
+
 jasmineRequire.html = function (j$) {
   j$.ResultsNode = jasmineRequire.ResultsNode();
   j$.HtmlReporter = jasmineRequire.HtmlReporter(j$);
@@ -55,7 +60,7 @@ jasmineRequire.HtmlReporter = function (j$) {
     }
   };
 
-  ResultsStateBuilder.prototype.specStarted = function (result) {};
+  ResultsStateBuilder.prototype.specStarted = function (result) { };
 
   ResultsStateBuilder.prototype.specDone = function (result) {
     this.currentParent.addChild(result, "spec");
@@ -75,12 +80,12 @@ jasmineRequire.HtmlReporter = function (j$) {
 
   function HtmlReporter(options) {
     var config = function () {
-        return (options.env && options.env.configuration()) || {};
-      },
+      return (options.env && options.env.configuration()) || {};
+    },
       getContainer = options.getContainer,
       createElement = options.createElement,
       createTextNode = options.createTextNode,
-      navigateWithNewParam = options.navigateWithNewParam || function () {},
+      navigateWithNewParam = options.navigateWithNewParam || function () { },
       addToExistingQueryString =
         options.addToExistingQueryString || defaultQueryString,
       filterSpecs = options.filterSpecs,
@@ -180,6 +185,7 @@ jasmineRequire.HtmlReporter = function (j$) {
 
     this.resultStatus = function (status) {
       if (status === "excluded") {
+        console.log("config().hideDisabled = ", config().hideDisabled);
         return config().hideDisabled
           ? "jasmine-excluded-no-display"
           : "jasmine-excluded";
@@ -320,8 +326,8 @@ jasmineRequire.HtmlReporter = function (j$) {
         );
       }
 
-      var results = find(".jasmine-results");
-      results.appendChild(summary);
+      var body = document.querySelector('body');
+      body.appendChild(summary);
 
       summaryList(stateBuilder.topResults, summary);
 
@@ -422,7 +428,7 @@ jasmineRequire.HtmlReporter = function (j$) {
       return includedChildren;
     }
 
-    function summaryList(resultsTree, domParent) {
+    function summaryList(resultsTree, domParent, specContainer = null) {
       var specListNode;
       for (var i = 0; i < resultsTree.children.length; i++) {
         var resultNode = resultsTree.children[i];
@@ -439,6 +445,15 @@ jasmineRequire.HtmlReporter = function (j$) {
           continue;
         }
         if (resultNode.type === "suite") {
+          specContainer =
+            createDom(
+              "pre",
+              { className: "jasmine-specs-pre" },
+              createDom(
+                "ul",
+                { className: "jasmine-specs-list" }
+              )
+            );
           var suiteListNode = createDom(
             "ul",
             { className: "jasmine-suite", id: "suite-" + resultNode.result.id },
@@ -452,16 +467,16 @@ jasmineRequire.HtmlReporter = function (j$) {
                 "a",
                 { href: specHref(resultNode.result) },
                 resultNode.result.description
-              )
+              ), specContainer
             )
           );
 
-          summaryList(resultNode, suiteListNode);
+          summaryList(resultNode, suiteListNode, specContainer);
           domParent.appendChild(suiteListNode);
         }
         if (resultNode.type === "spec") {
           if (domParent.getAttribute("class") !== "jasmine-specs") {
-            specListNode = createDom("ul", { className: "jasmine-specs" });
+            specListNode = createDom("li", { className: "jasmine-specs" });
             domParent.appendChild(specListNode);
           }
           var specDescription = resultNode.result.description;
@@ -477,7 +492,7 @@ jasmineRequire.HtmlReporter = function (j$) {
               " PENDING WITH MESSAGE: " +
               resultNode.result.pendingReason;
           }
-          specListNode.appendChild(
+          specContainer.appendChild(
             createDom(
               "li",
               {
@@ -498,11 +513,11 @@ jasmineRequire.HtmlReporter = function (j$) {
     function optionsMenu(config) {
       var optionsMenuDom = createDom(
         "div",
-        { className: "jasmine-run-options" },
+        { className: "jasmine-run-options popup" },
         createDom("span", { className: "jasmine-trigger" }, "Options"),
         createDom(
           "div",
-          { className: "jasmine-payload" },
+          { className: "jasmine-payload popuptext", id: "configBox" },
           createDom(
             "div",
             { className: "jasmine-stop-on-failure" },
@@ -592,18 +607,19 @@ jasmineRequire.HtmlReporter = function (j$) {
 
       var optionsTrigger = optionsMenuDom.querySelector(".jasmine-trigger"),
         optionsPayload = optionsMenuDom.querySelector(".jasmine-payload"),
-        isOpen = /\bjasmine-open\b/;
+        isOpen = /\b show\b/;
+      optionsTrigger.onclick = togglePopup
 
-      optionsTrigger.onclick = function () {
-        if (isOpen.test(optionsPayload.className)) {
-          optionsPayload.className = optionsPayload.className.replace(
-            isOpen,
-            ""
-          );
-        } else {
-          optionsPayload.className += " jasmine-open";
-        }
-      };
+      // optionsTrigger.onclick = function () {
+      //   if (isOpen.test(optionsPayload.className)) {
+      //     optionsPayload.className = optionsPayload.className.replace(
+      //       isOpen,
+      //       ""
+      //     );
+      //   } else {
+      //     optionsPayload.className += " show";
+      //   }
+      // };
 
       return optionsMenuDom;
     }

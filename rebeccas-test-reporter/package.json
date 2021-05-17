@@ -1,6 +1,6 @@
 {
   "name": "rebeccas-test-reporter",
-  "version": "1.0.19",
+  "version": "1.1.1",
   "description": "A general purpose test reporting package",
   "main": "dist/index.js",
   "browser": "dist/bonaroo-able.min.js",
@@ -32,6 +32,8 @@
     "@angular/core": "^11.2.12",
     "jasmine-core": ">=3.5",
     "karma": ">=0.9",
+    "karma-requirejs": "^1.1.0",
+    "requirejs": "^2.1.0",
     "karma-jasmine": ">=1.1"
   },
   "peerDependencies": {
